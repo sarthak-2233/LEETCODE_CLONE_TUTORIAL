@@ -35,6 +35,10 @@ const userSchema= new Schema({
     },
     problemSolved:{
         type:[String]
+    },
+    password:{
+        type:String,
+        required:true
     }
     
 },{timestamps:true});
