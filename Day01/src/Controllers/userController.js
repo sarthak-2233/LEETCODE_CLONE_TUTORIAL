@@ -1,11 +1,10 @@
 const User = require('../Models/userModel');
-const validate=require('validator');
-const bycrpt =require('bcrypt');
+const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken')
-
+const validate =require('../Utils/validator');
 
 // REGISTER CONTROLLER
-export const registerController = async (req,res)=>{
+ const register = async (req,res)=>{
     try {
         validate(req.body)
                 //DESTRUCTURE 
@@ -37,7 +36,7 @@ export const registerController = async (req,res)=>{
     }
 }
 
-const login =async (req,res)=>{ 
+ const login =async (req,res)=>{ 
     try {
             // DESTRUCTURE
             const {emailId,password}=req.body;
@@ -47,7 +46,7 @@ const login =async (req,res)=>{
                 } 
 
                 const user =await User.findOne({emailId})
-                const match =await bycrpt.compare(password,user.password)
+                const match =await bcrypt.compare(password,user.password)
                 if(!match)
                 {
                     throw new Error("WRONG PASSWORD");
@@ -77,9 +76,13 @@ const login =async (req,res)=>{
     }
 }
 
-const logout =async (req,res)=>{
+ const logout =async (req,res)=>{
     try {
-        res.send("woriking")
+        res.clearCookie('token')
+        res.status(200).send({
+            success:true,
+            message:'User logged out successfully'
+        })
     } catch (error) {
         console.log(error)
     }
@@ -91,3 +94,5 @@ const logout =async (req,res)=>{
         //         message:'Please provide all required fields'
         //     })
         // }     
+
+        module.exports={register,login,logout}

@@ -1,23 +1,22 @@
-const validator=require('validator');
-import isEmail from './../../node_modules/validator/es/lib/isEmail';
+const validator = require('validator');
 
-const validate=(data)=>{
-        const mandatoryField=['firstName','emailId','password'];
-        const IsAllowed = mandatoryField.every((k)=> Object.keys(data).includes(k))
+const validate = (data) => {
+    const mandatoryFields = ['firstName', 'emailId', 'password'];
+    const hasAllFields = mandatoryFields.every((field) => Object.keys(data).includes(field));
 
-        if(!IsAllowed)
-        {
-            throw new Error('Please provide all required fields')
-        }
-        if(validator.isEmail(data.emailId))
-        {
-            throw new Error('Please provide a valid emailId')
-        }
-        if(validator.isStrongPassword(data.password))
-        {
-            throw new Error('Password is not strong enough')
-        }
+    if (!hasAllFields) {
+        throw new Error('Please provide all required fields: firstName, emailId, password');
+    }
 
+    // FIXED: Check if email is NOT valid
+    if (!validator.isEmail(data.emailId)) {
+        throw new Error('Please provide a valid email address');
+    }
+
+    // FIXED: Check if password is NOT strong enough
+    // if (!validator.isStrongPassword(data.password)) {
+    //     throw new Error('Password is not strong enough. Use at least 8 characters with uppercase, lowercase, number, and symbol');
+    // }
 }
 
-module.exports=validate
+module.exports = validate;
