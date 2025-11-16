@@ -5,26 +5,48 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const cookieParser = require('cookie-parser');
 const authRouter=require('./Routes/userAuth')
-
+const redisclient=require('./Config/redis')
 
 // MIDDLEWARES
 app.use(cookieParser()); // to parse cookies from incoming requests
 app.use(express.json()); // convert incoming JSON requests to JS objects
 
-
-
-
 // ROUTES
 app.use('/user',authRouter)
-// DB CONNECTION
 const PORT =process.env.PORT || 5000;
-connectDB().then(async ()=>{  
-app.listen(PORT,()=>{
-    console.log('Server is running on port '+PORT);
-})
-}).catch((err)=>{
-    console.log('Database connection failed:', err);
-})
+
+// REDIS USE
+const InitializeConnection = async ()=>{
+    try {
+            await Promise.all([connectDB(),
+                redisclient.connect()
+            ]);
+            console.log('Connected to Redis successfully');
+
+            app.listen(PORT,()=>{ 
+                console.log(PORT)
+            })
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
+InitializeConnection();
+
+
+
+
+
+// // DB CONNECTION
+// 
+// connectDB().then(async ()=>{  
+// app.listen(PORT,()=>{
+//     console.log('Server is running on port '+PORT);
+// })
+// }).catch((err)=>{
+//     console.log('Database connection failed:', err);
+// })
 
 
 

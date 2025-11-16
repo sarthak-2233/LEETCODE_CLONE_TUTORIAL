@@ -1,4 +1,5 @@
 const User = require('../Models/userModel');
+const RedisClient = require('../Config/redis');
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken')
 const validate =require('../Utils/validator');
@@ -78,7 +79,15 @@ const validate =require('../Utils/validator');
 
  const logout =async (req,res)=>{
     try {
-        res.clearCookie('token')
+
+            // validate the token if correct or not
+        const {token} = req.cookies
+        const payload =jwt.decode(token)
+
+        await RedisClient.set(`toke${token}`,'BLOCKED');
+        await RedisClient.expireAt(`token:${token}`,payload.exp)
+
+        res.cookie('token',null,{expires: new Date(Date.now())})
         res.status(200).send({
             success:true,
             message:'User logged out successfully'
