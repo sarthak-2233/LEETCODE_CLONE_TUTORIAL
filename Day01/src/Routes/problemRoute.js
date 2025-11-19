@@ -16,3 +16,5 @@ problemRouter.patch('/:id',adminMiddleware,updateProblem)
 problemRouter.get('/:id',fetchProblem)
 problemRouter.get('/',fetchAllProblem)
 problemRouter.get('/user',solvedProblem)
+
+module.exports= problemRouter;

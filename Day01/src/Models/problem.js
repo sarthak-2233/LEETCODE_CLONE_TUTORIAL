@@ -35,7 +35,7 @@ const problemSchema= new Schema({
         }
     }
     ],
-    referenceSolution:{
+    referenceSolution:[{
         language:{
             type:String,
             required:true,
@@ -44,7 +44,7 @@ const problemSchema= new Schema({
             type:String,
             required:true,
         }
-    },
+    }],
     hiddenTestCases:[
         {input:{
             type:String,
