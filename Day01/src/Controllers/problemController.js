@@ -60,6 +60,7 @@ const deleteProblem=async(req,res)=>{
         {
             return res.status(404).send("PROBLEM NOT FOUND")
         }
+        res.status(200).send("PROBLEM DELETED SUCCESSFULLY")
     } catch (error) {
         console.log(error)
         res.status(500).send("INTERNAL SERVER ERROR DELETE")
@@ -116,13 +117,36 @@ const updateProblem=async(req,res)=>{
             res.status(500).send("INTERNAL SERVER ERROR Update")
         }
     }
-    // FETCH PROBLEM CONTROLLER
-    const getProblem=async(req,res)=>{
-        
+// FETCH PROBLEM CONTROLLER
+const getProblem=async(req,res)=>{
+    const {id}=req.params;
+    try {
+        if (!id) {
+            res.status(400).send("Id Not Found")
+        }
+        const getProblem= await Problem.findById(id);
+        if(!getProblem)
+        {
+            return res.status(404).send("PROBLEM NOT FOUND")
+        }
+        res.status(200).send(getProblem)
+    } catch (error) {
+        console.log(error)
+    }        
     }
-    // FETCH ALL PROBLEMS CONTROLLER
-    const getAllProblem=async(req,res)=>{
-        
+// FETCH ALL PROBLEMS CONTROLLER
+const getAllProblem=async(req,res)=>{
+        try {
+            const allProblems=await Problem.find({});
+            if(!allProblems)
+            {
+                return res.status(404).send("PROBLEMS NOT FOUND")
+            }
+            res.status(200).send(allProblems)
+        } catch (error) {
+            console.log(error)
+            res.status(500).send("INTERNAL SERVER ERROR FETCH ALL")
+        }
 }
 // FETCH SOLVED PROBLEMS CONTROLLER
 const solvedProblem=async(req,res)=>{
