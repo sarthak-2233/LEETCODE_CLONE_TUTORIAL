@@ -9,7 +9,7 @@ authRouter.post('/register', register)
 authRouter.post('/login', login)
 // LOGOUT
 authRouter.post('/logout',userMiddleware ,logout)
-// ADMIN REGISTER
+// ADMIN REGISTER route 
 authRouter.post('/admin/register',adminMiddleware,adminRegitser)
 // GET PROFILE (you'll need to add the controller function for this)
 // authRouter.get('/profile', ) // Add the controller function here
