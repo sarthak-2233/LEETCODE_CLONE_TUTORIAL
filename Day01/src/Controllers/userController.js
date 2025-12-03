@@ -4,7 +4,7 @@ const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken')
 const validate =require('../Utils/validator');
 
-// REGISTER CONTROLLER
+// REGISTER CONTROLLER as admin
  const register = async (req,res)=>{
     try {
         validate(req.body)
