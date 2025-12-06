@@ -124,7 +124,7 @@ const getProblem=async(req,res)=>{
         if (!id) {
             res.status(400).send("Id Not Found")
         }
-        const getProblem= await Problem.findById(id);
+        const getProblem= await Problem.findById(id).select('title description difficulty tags visibleTestCases referenceSolution startCode');
         if(!getProblem)
         {
             return res.status(404).send("PROBLEM NOT FOUND")
@@ -137,7 +137,7 @@ const getProblem=async(req,res)=>{
 // FETCH ALL PROBLEMS CONTROLLER
 const getAllProblem=async(req,res)=>{
         try {
-            const allProblems=await Problem.find({});
+            const allProblems=await Problem.find({}).select('title description difficulty tags');
             if(!allProblems)
             {
                 return res.status(404).send("PROBLEMS NOT FOUND")
