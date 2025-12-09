@@ -49,7 +49,7 @@ const submissionSchema=new Schema(
         }
     },{timestamps:true}
 )
-
+// enum for array
 const Submission = mongoose.Model('Submission',submissionSchema);
 
 module.exports=Submission;
