@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const {Schema}= mongoose;
-// problem submission when completed 
+// problem submission when completed after code
 const submissionSchema=new Schema(
     {
         userId:{
