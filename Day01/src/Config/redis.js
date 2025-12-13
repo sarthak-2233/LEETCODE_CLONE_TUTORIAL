@@ -1,4 +1,5 @@
 const { createClient } = require('redis');
+// redis 
 const client = createClient({
     username: 'default',
     password: process.env.REDDIS_PASSWORD,
