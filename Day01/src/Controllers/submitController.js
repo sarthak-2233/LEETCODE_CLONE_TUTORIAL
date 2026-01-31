@@ -1,4 +1,4 @@
-const Problem=require('../Models/problemModel');
+const Problem = require('../Models/problem');
 const Submission=require('../Models/submissionModel');
 const {getLanguageByid,submitCode}= require('../Utils/problemUtil');
 const userSubmission=async (req,res)=>{
