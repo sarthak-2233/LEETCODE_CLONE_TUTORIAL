@@ -150,7 +150,19 @@ const getAllProblem=async(req,res)=>{
 }
 // FETCH SOLVED PROBLEMS CONTROLLER
 const solvedProblem=async(req,res)=>{
-
+    try {
+        // const count =req.result.problemSolved.length;
+        // USING REF FROM SCHEMA MODEL AND USE POPULATE TO MAP REFERENCE
+        const userId=req.result._id;
+        const user= await User.findById(userId).populate({
+            path:'problemSolved',
+            select:'_id title description difficulty tags'
+        });
+        res.status(200).send(user.problemSolved);
+        // res.status(200).send({count});
+    } catch (error) {
+        res.status(500).send("INTERNAL SERVER ERROR FETCH SOLVED PROBLEMS")
+    }
 }
 
 module.exports={createProblem,deleteProblem,updateProblem,getProblem,getAllProblem,solvedProblem}

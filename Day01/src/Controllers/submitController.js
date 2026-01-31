@@ -92,5 +92,47 @@ const userSubmission=async (req,res)=>{
 
 
 
+const runCode=async(req,res)=>{
+    try {
+        const userId=req.result_.id;
+        const problemId=req.params.id
+        const {code,language}=req.body;
 
-module.exports={userSubmission}
+        if(!userId || !problemId || !code || !language)
+        {
+            return res.status(400).send("MISSING PARAMETERS")
+        }
+        // Fetch problem from Db
+       const problem= await Problem.findById(problemId)
+    //    TESTCASE MIL GAYE  
+    
+    // DB MAIN STORED AB CHECK JUDGE 0
+        const languageId= getLanguageByid(language)
+        const submission= problem.visibleTestCasesTestCases.map((testcase)=>({
+                    source_code: completeCode,
+                    language_id: languageId,
+                    stdin: testcase.input,
+                    expected_output: testcase.output
+                }));
+
+         const submitResult =await submitBatch(submission);
+                 //    console.log(submitResult)
+        const resultToken =submitResult.map((result)=>result.token);
+          const testResult =await submitToken(resultToken) 
+          
+                res.status(200).json({
+                    testResult
+                })
+
+           
+        //Problem Id ko user ke problemSolved me add karna hai
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("INTERNAL SERVER ERROR SUBMISSION")
+    }
+}
+
+
+
+module.exports={userSubmission,runCode}
