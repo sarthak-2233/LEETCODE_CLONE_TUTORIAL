@@ -68,6 +68,13 @@ const userSubmission=async (req,res)=>{
         }
 
         await submittedResult.save();
+        //Problem Id ko user ke problemSolved me add karna hai
+        if(!req.result.problemSolved.includes(problemId))
+        {
+            req.result.problemSolved.push(problemId);
+            await req.result.save();
+        }
+
         res.status(200).json({
             submissionId: submittedResult._id,
             status: submittedResult.status,

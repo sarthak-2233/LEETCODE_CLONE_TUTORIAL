@@ -20,7 +20,7 @@ const submissionSchema=new Schema(
         language:{
             type:String,
             required:true,
-            enum:['cpp','java','javascript']
+            enum:['c++','java','javascript']
         },
         status:{
             type:String,
@@ -50,6 +50,6 @@ const submissionSchema=new Schema(
     },{timestamps:true}
 )
 // enum for array
-const Submission = mongoose.Model('Submission',submissionSchema);
+const Submission = mongoose.model('Submission',submissionSchema);
 
 module.exports=Submission;
