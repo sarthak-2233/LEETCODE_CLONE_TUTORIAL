@@ -15,6 +15,7 @@ problemRouter.delete('/delete/:id',adminMiddleware,deleteProblem)
 // NO ACCESS REQUIRED
 // FETCH
 problemRouter.get('/getProblem/:id',userMiddleware,getProblem)
+//fetch all
 problemRouter.get('/getAllProblem',userMiddleware,getAllProblem)
 problemRouter.get('/problemSolvedByUser',userMiddleware,solvedProblem)
 

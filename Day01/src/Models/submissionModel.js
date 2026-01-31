@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const {Schema}= mongoose;
-// problem submission 
+// problem submission when completed after code
 const submissionSchema=new Schema(
     {
         userId:{
@@ -49,7 +49,7 @@ const submissionSchema=new Schema(
         }
     },{timestamps:true}
 )
-
+// enum for array
 const Submission = mongoose.Model('Submission',submissionSchema);
 
 module.exports=Submission;

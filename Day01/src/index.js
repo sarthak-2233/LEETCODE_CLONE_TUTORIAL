@@ -20,7 +20,7 @@ app.use('/submit',submitRouter)
 
 const PORT =process.env.PORT || 5000;
 
-// REDIS USE
+// REDIS initialisation 
 const InitializeConnection = async ()=>{
     try {
             await Promise.all([connectDB(),
