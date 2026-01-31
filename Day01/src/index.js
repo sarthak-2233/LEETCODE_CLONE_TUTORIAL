@@ -4,9 +4,11 @@ const connectDB=require('./Config/db')
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const cookieParser = require('cookie-parser');
-const authRouter=require('./Routes/userAuth')
 const redisclient=require('./Config/redis')
+// ROUTES
+const authRouter=require('./Routes/userAuth')
 const problemRouter=require('./Routes/problemRoute')
+const submitRouter=require('./Routes/submitRoute')
 // MIDDLEWARE
 app.use(cookieParser()); // to parse cookies from incoming requests
 app.use(express.json()); // convert incoming JSON requests to JS objects
@@ -14,6 +16,8 @@ app.use(express.json()); // convert incoming JSON requests to JS objects
 // ROUTES
 app.use('/user',authRouter)
 app.use('/problem',problemRouter)
+app.use('/submit',submitRouter)
+
 const PORT =process.env.PORT || 5000;
 
 // REDIS USE
