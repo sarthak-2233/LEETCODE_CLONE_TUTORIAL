@@ -46,7 +46,13 @@ const userSchema= new Schema({
     }
     
 },{timestamps:true});
-
+// SCHEMA COMPLETE HONE KE BAAD 
+// OPTIONAL PICHE DELTE KARNE WALA BHI SHI
+userSchema.post('findOneAndDelete',async function(userInfo){
+    if(userInfo){
+        await mongoose.model('Submission').deleteMany({user:userInfo._id});
+    }
+});
 
 const User =mongoose.model('User',userSchema);
 

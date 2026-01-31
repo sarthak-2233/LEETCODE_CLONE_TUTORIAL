@@ -1,6 +1,7 @@
 const Problem= require('../Models/problem')
 const {getLanguageByid,submitBatch,submitToken}= require('../Utils/problemUtil');
-
+const User= require('../Models/userModel');
+const Submission= require('../Models/submissionModel');
 // CREATE PROBLEM CONTROLLER
 const createProblem= async(req,res)=>{
     const {title,description,difficulty,tags,
@@ -165,7 +166,25 @@ const solvedProblem=async(req,res)=>{
     }
 }
 
-module.exports={createProblem,deleteProblem,updateProblem,getProblem,getAllProblem,solvedProblem}
+const submittedProblems=async(req,res)=>
+{
+    try {
+        const userId=req.result._id;
+        const problemid=req.params.pid;
+
+        const submissions= await Submission.find({userId: userId, problemId: problemid});
+        res.status(200).send(submissions);
+
+        if(submissions.length===0)
+        {
+            return res.status(404).send("NO SUBMISSIONS FOUND FOR THIS PROBLEM")
+        }
+
+    } catch (error) {
+        res.status(500).send("INTERNAL SERVER ERROR FETCH SUBMITTED PROBLEMS")
+    }
+}
+module.exports={createProblem,deleteProblem,updateProblem,getProblem,getAllProblem,solvedProblem,submittedProblems}
 
 // JUDGE0 INTEGRATION TO FETCH CODE 
 // KEYWORDS REQUIRED FROM JUDGE0 api

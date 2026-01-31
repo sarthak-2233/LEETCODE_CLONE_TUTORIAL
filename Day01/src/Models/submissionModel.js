@@ -49,6 +49,10 @@ const submissionSchema=new Schema(
         }
     },{timestamps:true}
 )
+
+// INDEXING FOR FAST RETRIEVAL -- COMPOUND INDEXING
+submissionSchema.index({userId:1,problemId:1})
+
 // enum for array
 const Submission = mongoose.model('Submission',submissionSchema);
 

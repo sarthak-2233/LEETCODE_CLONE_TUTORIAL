@@ -3,7 +3,7 @@ const RedisClient = require('../Config/redis');
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken')
 const validate =require('../Utils/validator');
-
+const Submission=require('../Models/submissionModel');
 // REGISTER CONTROLLER as admin
  const register = async (req,res)=>{
     try {
@@ -131,4 +131,26 @@ const adminRegitser=async(req,res)=>{
     }
 }
 
-module.exports={register,login,logout,adminRegitser}
+// DELETE PROFILE CONTROLLER
+const deleteProfile=async(req,res)=>{
+    try {
+        const userId=req.user._id;
+        //user schema se delete
+        await User.findByIdAndDelete(userId);
+        // user submission bhi delete
+       
+        // await Submission.deleteMany({user:userId});
+        res.status(200).send({
+            success:true,
+            message:'User profile deleted successfully'
+        })
+    } catch (error) {
+        res.status(400).send({
+            success:false,
+            message:'Error in deleting profile',
+            error:error.message
+        })
+    }
+}
+
+module.exports={register,login,logout,adminRegitser,deleteProfile}
