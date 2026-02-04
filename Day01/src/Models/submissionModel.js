@@ -50,7 +50,7 @@ const submissionSchema=new Schema(
     },{timestamps:true}
 )
 
-// INDEXING FOR FAST RETRIEVAL -- COMPOUND INDEXING
+// INDEXING FOR FAST RETRIEVAL -- COMPOUND INDEX
 submissionSchema.index({userId:1,problemId:1})
 
 // enum for array
