@@ -1,5 +1,6 @@
 const { createClient } = require('redis');
-// redis 
+// redis  
+// rate limiter
 // DNS change check
 const client = createClient({
     username: 'default',
