@@ -17,17 +17,18 @@ const Submission=require('../Models/submissionModel');
         const token = jwt.sign({_id:user._id,emailId:emailId,role:'user'},process.env.JWT_SECRET,{expiresIn:60*60}) 
         // JWT TOKEN
             res.cookie('token',token,{maxAge:60*60*1000})
-        res.status(201).send({
-            success:true,
-            message:'User registered successfully',
-            user:{
-                firstName:user.firstName,
-                emailId:user.emailId,
-                role:user.role,
-                _id:user._id
-            },
-            token
-        })
+            // destructure
+            const reply={
+                    firstName:user.firstName,
+                    emailId:user.emailId,
+                    role:user.role,
+                    _id:user._id
+                }
+        res.status(200).json({
+                user:reply,
+                message:"User logged in successfully",
+                token
+            })
     } catch (error) {
         console.log(error)
         res.status(400).send({
@@ -49,6 +50,12 @@ const Submission=require('../Models/submissionModel');
 
                 const user =await User.findOne({emailId})
                 const match =await bcrypt.compare(password,user.password)
+                const reply={
+                    firstName:user.firstName,
+                    emailId:user.emailId,
+                    role:user.role,
+                    _id:user._id
+                }
                 if(!match)
                 {
                     throw new Error("WRONG PASSWORD");
@@ -56,15 +63,9 @@ const Submission=require('../Models/submissionModel');
                 // JWT TOKEN
                 const token = jwt.sign({_id:user._id,emailId:emailId,role:user.role},process.env.JWT_SECRET,{expiresIn:60*60}) 
             res.cookie('token',token,{maxAge:60*60*1000})
-            res.status(200).send({  
-                success:true,
-                message:'User logged in successfully',
-                user:{
-                    firstName:user.firstName,
-                    emailId:user.emailId,
-                    role:user.role,
-                    _id:user._id
-                },
+            res.status(200).json({
+                user:reply,
+                message:"User logged in successfully",
                 token
             })
 
