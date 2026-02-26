@@ -18,7 +18,11 @@ function App(){
     dispatch(checkAuth());
   }, [dispatch]);
 
-
+ if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>;
+  }
 
   return(
   <>
@@ -26,6 +30,17 @@ function App(){
       <Route path="/" element={isAuthenticated ?<HomePage></HomePage>:<Navigate to="/signup" />}></Route>
       <Route path="/login" element={isAuthenticated?<Navigate to="/" />:<LoginPage></LoginPage>} ></Route>
       <Route path="/signup" element={isAuthenticated?<Navigate to="/" />:<SignUpPage></SignUpPage>}></Route>
+      {/* ADMIN ROUTE */}
+     {/* <Route 
+        path="/admin" 
+        element={
+          isAuthenticated && user?.role === 'admin' ? 
+            <AdminPanel /> : 
+            <Navigate to="/" />
+        } 
+      /> */}
+   
+   
     </Routes>
   </>
   )
