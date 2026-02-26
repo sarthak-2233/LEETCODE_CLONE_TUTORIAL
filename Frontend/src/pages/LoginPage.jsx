@@ -1,24 +1,36 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import {loginUser} from "../authSlice"
+import { useEffect } from 'react';
 
 const signupSchema = z.object({
-  firstName: z.string().min(3, "Minimum character should be 3"),
   emailId: z.string().email("Invalid Email"),
   password: z.string().min(8, "Password is to weak")
 });
 
 function LoginPage() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(signupSchema) });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
-    // Backend data ko send kar dena chaiye?
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
   };
 
   return (
@@ -27,8 +39,8 @@ function LoginPage() {
         <div className="card-body">
           <h2 className="card-title justify-center text-3xl">Leetcode</h2> {/* Centered title */}
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* LOGIN form fields */}
-            
+            {/* Existing form fields */}
+
             <div className="form-control  mt-4">
               <label className="label mb-1">
                 <span className="label-text">Email</span>
