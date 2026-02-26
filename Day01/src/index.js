@@ -9,6 +9,12 @@ const redisclient=require('./Config/redis')
 const authRouter=require('./Routes/userAuth')
 const problemRouter=require('./Routes/problemRoute')
 const submitRouter=require('./Routes/submitRoute')
+// CORS
+const cors=require('cors')
+app.use(cors({
+    origin:'',
+    credentials:true,
+}))
 // MIDDLEWARE
 app.use(cookieParser()); // to parse cookies from incoming requests
 app.use(express.json()); // convert incoming JSON requests to JS objects
