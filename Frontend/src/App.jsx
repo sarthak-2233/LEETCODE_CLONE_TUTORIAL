@@ -7,27 +7,28 @@ import {useSelector,useDispatch} from "react-redux";
 import { checkAuth } from './../authSlice';
 import { useEffect } from 'react';
 
-const App = () => {
+
+function App(){
   
-  // isAuthenticated
-  const { isAuthenticated } = useSelector(state => state.auth);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const {isAuthenticated} = useSelector((state)=>state.auth);
 
-    useEffect(()=>{
-      dispatch(checkAuth());
-    },[dispatch])
+  // check initial authentication
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
 
-  return (
-    <>
-     <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Routes>
 
-    </>
+  return(
+  <>
+    <Routes>
+      <Route path="/" element={isAuthenticated ?<HomePage></HomePage>:<Navigate to="/signup" />}></Route>
+      <Route path="/login" element={isAuthenticated?<Navigate to="/" />:<LoginPage></LoginPage>} ></Route>
+      <Route path="/signup" element={isAuthenticated?<Navigate to="/" />:<SignUpPage></SignUpPage>}></Route>
+    </Routes>
+  </>
   )
 }
 
-export default App
+export default App;
