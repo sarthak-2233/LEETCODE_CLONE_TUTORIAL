@@ -3,7 +3,7 @@ import { NavLink } from 'react-router'; // Fixed import
 import { useDispatch, useSelector } from 'react-redux';
 import axiosClient from '../utils/axiosClient';
 import { logoutUser } from '../authSlice';
-
+// from store
 function HomePage() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
