@@ -6,6 +6,8 @@ import SignUpPage from './pages/SignUpPage';
 import {useSelector,useDispatch} from "react-redux";
 import { checkAuth } from './authSlice';
 import { useEffect } from 'react';
+import AdminPanel from './pages/AdminPanel';
+import ProblemPage from './pages/ProblemPage';
 
 
 function App(){
@@ -31,18 +33,22 @@ function App(){
       <Route path="/" element={isAuthenticated ?<HomePage></HomePage>:<Navigate to="/signup" />}></Route>
       <Route path="/login" element={isAuthenticated?<Navigate to="/" />:<LoginPage></LoginPage>} ></Route>
       <Route path="/signup" element={isAuthenticated?<Navigate to="/" />:<SignUpPage></SignUpPage>}></Route>
+      
+      
       {/* ADMIN ROUTE */}
       {/** IF WE MANUALLY TYPE ADMIN NOT WORK AS IT GETS REFRESHED ,THUS USE A BUTTON TO NAVIGATE */}
-      <Route 
+      <Route path="/admin" element={<AdminPanel/>}/> 
+      {/* <Route 
         path="/admin" 
         element={
           isAuthenticated && user?.role === 'admin' ? 
             <AdminPanel /> : 
             <Navigate to="/" />
         } 
-      /> 
+      />  */}
    
-   
+   {/* PROBLEM PAGE */}
+        <Route path="/problem/:problemId" element={<ProblemPage />} />
     </Routes>
   </>
   )

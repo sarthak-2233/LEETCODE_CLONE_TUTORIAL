@@ -5,13 +5,16 @@ const userSubmission=async (req,res)=>{
     try {
         const userId=req.result_.id;
         const problemId=req.params.id
-        const {code,language}=req.body;
+        let {code,language}=req.body;
 
         if(!userId || !problemId || !code || !language)
         {
             return res.status(400).send("MISSING PARAMETERS")
         }
         // Fetch problem from Db
+        // backend and frontend missmatch
+        if(language==='cpp')
+            language='c++'
        const problem= await Problem.findById(problemId)
     //    TESTCASE MIL GAYE  
     const submittedResult= await Submission.create({
@@ -76,13 +79,11 @@ const userSubmission=async (req,res)=>{
         }
 
         res.status(200).json({
-            submissionId: submittedResult._id,
-            status: submittedResult.status,
-            testCasesPassed: submittedResult.testCasesPassed,
-            totalTestCases: submittedResult.testCasesToatal,
-            runtime: submittedResult.runtime,
-            memory: submittedResult.memory,
-            errorMessage: submittedResult.errorMessage
+            accepted,
+            totalTestCases: submitResult.testCasesToatal,
+            passedTestCases: testCasesPassed,
+            runtime,
+            memory,
         })
     } catch (error) {
         console.log(error)
