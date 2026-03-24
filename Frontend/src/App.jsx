@@ -32,6 +32,7 @@ function App(){
       <Route path="/login" element={isAuthenticated?<Navigate to="/" />:<LoginPage></LoginPage>} ></Route>
       <Route path="/signup" element={isAuthenticated?<Navigate to="/" />:<SignUpPage></SignUpPage>}></Route>
       {/* ADMIN ROUTE */}
+      {/** IF WE MANUALLY TYPE ADMIN NOT WORK AS IT GETS REFRESHED ,THUS USE A BUTTON TO NAVIGATE */}
       <Route 
         path="/admin" 
         element={
