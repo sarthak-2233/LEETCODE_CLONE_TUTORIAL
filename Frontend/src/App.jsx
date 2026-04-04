@@ -33,11 +33,16 @@ function App(){
       <Route path="/" element={isAuthenticated ?<HomePage></HomePage>:<Navigate to="/signup" />}></Route>
       <Route path="/login" element={isAuthenticated?<Navigate to="/" />:<LoginPage></LoginPage>} ></Route>
       <Route path="/signup" element={isAuthenticated?<Navigate to="/" />:<SignUpPage></SignUpPage>}></Route>
-      
-      
+      <Route path="/problem/:problemId" element={<ProblemPage />} />
       {/* ADMIN ROUTE */}
+   
+      <Route path="/admin" element={isAuthenticated && user?.role === 'admin' ? <Admin /> : <Navigate to="/" />} />
+      <Route path="/admin/create" element={isAuthenticated && user?.role === 'admin' ? <AdminPanel /> : <Navigate to="/" />} />
+      <Route path="/admin/delete" element={isAuthenticated && user?.role === 'admin' ? <AdminDelete /> : <Navigate to="/" />} /> 
+      
+      </Routes>
+      
       {/** IF WE MANUALLY TYPE ADMIN NOT WORK AS IT GETS REFRESHED ,THUS USE A BUTTON TO NAVIGATE */}
-      <Route path="/admin" element={<AdminPanel/>}/> 
       {/* <Route 
         path="/admin" 
         element={
@@ -48,8 +53,6 @@ function App(){
       />  */}
    
    {/* PROBLEM PAGE */}
-        <Route path="/problem/:problemId" element={<ProblemPage />} />
-    </Routes>
   </>
   )
 }
