@@ -1,4 +1,5 @@
 const express= require('express')
+import { useDispatch } from 'react-redux';
 const app= express()
 const connectDB=require('./Config/db')
 const path = require('path');
@@ -9,6 +10,7 @@ const redisclient=require('./Config/redis')
 const authRouter=require('./Routes/userAuth')
 const problemRouter=require('./Routes/problemRoute')
 const submitRouter=require('./Routes/submitRoute')
+const aiChattingRouter=require('./Routes/aiChatting')
 // CORS
 const cors=require('cors')
 app.use(cors({
@@ -23,7 +25,7 @@ app.use(express.json()); // convert incoming JSON requests to JS objects
 app.use('/user',authRouter)
 app.use('/problem',problemRouter)
 app.use('/submit',submitRouter)
-
+app.use('/ai',aiChattingRouter)
 const PORT =process.env.PORT || 5000;
 
 // REDIS initialisation 
