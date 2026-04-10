@@ -15,7 +15,7 @@ const Submission=require('../Models/submissionModel');
         req.body.role='user'   
         const user= await User.create(req.body)
         const token = jwt.sign({_id:user._id,emailId:emailId,role:'user'},process.env.JWT_SECRET,{expiresIn:60*60}) 
-        // JWT TOKEN
+        // JWT TOKEN REFRESH/EXPIRE 
             res.cookie('token',token,{maxAge:60*60*1000})
             // destructure
             const reply={
