@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axiosClient from "../utils/axiosClient";
 import { Send } from 'lucide-react';
-
+// chatbot upgrade
 function ChatAi({problem}) {
     const [messages, setMessages] = useState([
         { role: 'model', content: "Hi, How are you" },
