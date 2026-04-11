@@ -1,6 +1,6 @@
 const { GoogleGenAI } = require("@google/genai");
 
-
+// make prompt more advance
 const solveDoubt = async(req , res)=>{
 
 
