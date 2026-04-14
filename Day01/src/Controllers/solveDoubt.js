@@ -5,7 +5,7 @@ const solveDoubt = async(req , res)=>{
 
 
     try{
-
+        // NEED TO BUY KEY LATER
         const {messages,title,description,testCases,startCode} = req.body;
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY });
        
