@@ -26,6 +26,8 @@ app.use('/user',authRouter)
 app.use('/problem',problemRouter)
 app.use('/submit',submitRouter)
 app.use('/ai',aiChattingRouter)
+app.use("/video",videoRouter);
+
 const PORT =process.env.PORT || 5000;
 
 // REDIS initialisation 

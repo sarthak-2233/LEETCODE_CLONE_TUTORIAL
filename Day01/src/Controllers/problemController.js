@@ -1,8 +1,9 @@
 // problem creator 
-const Problem= require('../Models/problem')
+const Problem = require('../Models/problem');
 const {getLanguageByid,submitBatch,submitToken}= require('../Utils/problemUtil');
 const User= require('../Models/userModel');
 const Submission= require('../Models/submissionModel');
+const solutionVideo= require('../Models/solutionVideo');
 // CREATE PROBLEM CONTROLLER
 const createProblem= async(req,res)=>{
     const {title,description,difficulty,tags,
@@ -127,9 +128,22 @@ const getProblem=async(req,res)=>{
             res.status(400).send("Id Not Found")
         }
         const getProblem= await Problem.findById(id).select('title description difficulty tags visibleTestCases referenceSolution startCode');
+    
         if(!getProblem)
         {
             return res.status(404).send("PROBLEM NOT FOUND")
+        }
+
+        // video upload
+        const videos= await solutionVideo.find({problemId:id})
+        if(videos)
+        {
+            getProblem.secureUrl=secureUrl;
+            getProblem.cloudinaryPublicId=cloudinaryPublicId; // Add videos to the problem object
+            getProblem.thumbnailUrl=thumbnailUrl; // Add videos to the problem object
+            getProblem.duration=duration; // Add videos to the problem object
+            return res.status(200).send(getProblem)
+
         }
         res.status(200).send(getProblem)
     } catch (error) {
