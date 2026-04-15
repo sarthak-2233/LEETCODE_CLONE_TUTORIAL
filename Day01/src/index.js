@@ -15,8 +15,8 @@ const videoRouter = require("./routes/videoCreator");
 // CORS
 const cors=require('cors')
 app.use(cors({
-    origin:'',
-    credentials:true,
+    origin: 'http://localhost:5173',
+    credentials: true 
 }))
 // MIDDLEWARE
 app.use(cookieParser()); // to parse cookies from incoming requests
