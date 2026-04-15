@@ -86,7 +86,7 @@ const Submission=require('../Models/submissionModel');
         const {token} = req.cookies
         const payload =jwt.decode(token)
 
-        await RedisClient.set(`toke${token}`,'BLOCKED');
+        await RedisClient.set(`token${token}`,'BLOCKED');
         await RedisClient.expireAt(`token:${token}`,payload.exp)
 
         res.cookie('token',null,{expires: new Date(Date.now())})
