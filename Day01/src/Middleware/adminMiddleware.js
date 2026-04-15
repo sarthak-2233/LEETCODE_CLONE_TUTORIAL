@@ -4,42 +4,45 @@ const redisClient = require('../Config/redis');
 
 
 const adminMiddleware = async(req,res,next)=>{
-try {
-        const {token} = req.cookies
+try{
+       
+        const {token} = req.cookies;
         if(!token)
-        {
-            throw new Error("NO TOKEN FOUND");
-        }
-        const payload =jwt.verify(token,process.env.JWT_SECRET)
+            throw new Error("Token is not persent");
 
-        // AB ASLI CHECK
-        const {_id}= payload;
-        if(!_id)
-        {
-            throw new Error("INVALID TOKEN PAYLOAD");
+        const payload = jwt.verify(token,process.env.JWT_KEY);
+
+        const {_id} = payload;
+
+        if(!_id){
+            throw new Error("Invalid token");
         }
 
-        const result= await User.findById(_id)
-     
-        if(payload.role !== 'admin'){
-            throw new Error("ACCESS DENIED - NOT AN ADMIN");
+        const result = await User.findById(_id);
+
+        if(payload.role!='admin')
+            throw new Error("Invalid Token");
+
+        if(!result){
+            throw new Error("User Doesn't Exist");
         }
-     
-        if(!result)
-        {
-            throw new Error("USER NOT FOUND");
-        }
-        // redis check karega block ke liye
-        const isBlocked =await redisClient.exists(`token:${token}`)
-        if(isBlocked)
-        {
-            throw new Error("INVALID TOKEN ");
-        }
-            req.result = result;
-            next()
- } catch (error) {
-        console.log("MIDDLEWARE ERROR NO ACCESS "+error)    
- }
+
+        // Redis ke blockList mein persent toh nahi hai
+
+        const IsBlocked = await redisClient.exists(`token:${token}`);
+
+        if(IsBlocked)
+            throw new Error("Invalid Token");
+
+        req.result = result;
+
+
+        next();
+    }
+    catch(err){
+        res.status(401).send("Error: "+ err.message)
+    }
+
 
 }
 
