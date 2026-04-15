@@ -32,12 +32,12 @@ const ProblemPage = () => {
       setLoading(true);
       try {
         
-        const response = await axiosClient.get(`/problem/problemById/${problemId}`);
+        const res = await axiosClient.get(`/problem/getProblem/${problemId}`);
        
         
-        const initialCode = response.data.startCode.find(sc => sc.language === langMap[selectedLanguage]).initialCode;
+        const initialCode = res.data.startCode.find(sc => sc.language === selectedLanguage)?.initialCode || '';
 
-        setProblem(response.data);
+        setProblem(res.data);
         
         setCode(initialCode);
         setLoading(false);
@@ -54,7 +54,7 @@ const ProblemPage = () => {
   // Update code when language changes
   useEffect(() => {
     if (problem) {
-      const initialCode = problem.startCode.find(sc => sc.language === langMap[selectedLanguage]).initialCode;
+      const initialCode = problem.startCode.find(sc => sc.language === selectedLanguage)?.initialCode || '';
       setCode(initialCode);
     }
   }, [selectedLanguage, problem]);
@@ -392,7 +392,7 @@ const ProblemPage = () => {
                         <p className="text-sm">Memory: {runResult.memory+" KB"}</p>
                         
                         <div className="mt-4 space-y-2">
-                          {runResult.testCases.map((tc, i) => (
+                          {runResult.testCases?.map((tc, i) => (
                             <div key={i} className="bg-base-100 p-3 rounded text-xs">
                               <div className="font-mono">
                                 <div><strong>Input:</strong> {tc.stdin}</div>
@@ -410,7 +410,7 @@ const ProblemPage = () => {
                       <div>
                         <h4 className="font-bold">❌ Error</h4>
                         <div className="mt-4 space-y-2">
-                          {runResult.testCases.map((tc, i) => (
+                          {runResult.testCases?.map((tc, i) => (
                             <div key={i} className="bg-base-100 p-3 rounded text-xs">
                               <div className="font-mono">
                                 <div><strong>Input:</strong> {tc.stdin}</div>

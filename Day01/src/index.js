@@ -25,7 +25,7 @@ app.use(express.json()); // convert incoming JSON requests to JS objects
 // ROUTES
 app.use('/user',authRouter)
 app.use('/problem',problemRouter)
-app.use('/submit',submitRouter)
+app.use('/submission', submitRouter);
 app.use('/ai',aiChattingRouter)
 app.use("/video",videoRouter);
 

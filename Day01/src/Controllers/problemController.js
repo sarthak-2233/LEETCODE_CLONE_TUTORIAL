@@ -138,10 +138,10 @@ const getProblem=async(req,res)=>{
         const videos= await solutionVideo.find({problemId:id})
         if(videos)
         {
-            getProblem.secureUrl=secureUrl;
-            getProblem.cloudinaryPublicId=cloudinaryPublicId; // Add videos to the problem object
-            getProblem.thumbnailUrl=thumbnailUrl; // Add videos to the problem object
-            getProblem.duration=duration; // Add videos to the problem object
+            getProblem.secureUrl=videos[0]?.secureUrl;
+            getProblem.cloudinaryPublicId=videos[0]?.cloudinaryPublicId;
+            getProblem.thumbnailUrl=videos[0]?.thumbnailUrl;
+            getProblem.duration=videos[0]?.duration;
             return res.status(200).send(getProblem)
 
         }
