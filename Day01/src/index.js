@@ -44,7 +44,7 @@ const InitializeConnection = async ()=>{
                 console.log(PORT)
             })
     } catch (error) {
-        console.log(error)
+        console.log(error);
 
     }
 }
