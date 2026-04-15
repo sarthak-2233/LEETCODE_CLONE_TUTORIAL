@@ -1,5 +1,5 @@
 const express= require('express')
-import { useDispatch } from 'react-redux';
+// const { useDispatch } = require('react-redux');
 const app= express()
 const connectDB=require('./Config/db')
 const path = require('path');
@@ -11,6 +11,7 @@ const authRouter=require('./Routes/userAuth')
 const problemRouter=require('./Routes/problemRoute')
 const submitRouter=require('./Routes/submitRoute')
 const aiChattingRouter=require('./Routes/aiChatting')
+const videoRouter = require("./routes/videoCreator");
 // CORS
 const cors=require('cors')
 app.use(cors({

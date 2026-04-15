@@ -1,6 +1,6 @@
 const cloudinary = require('cloudinary').v2;
-const Problem = require("../models/problem");
-const User = require("../models/user");
+const Problem = require("../Models/problem");
+const User = require("../models/userModel");
 const SolutionVideo = require("../models/solutionVideo");
 const { sanitizeFilter } = require('mongoose');
 
