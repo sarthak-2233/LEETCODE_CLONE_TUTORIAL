@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 import AdminPanel from './pages/AdminPanel';
 import ProblemPage from './pages/ProblemPage';
 import AdminDelete from './components/AdminDelete';
-
+import AdminUpload from './components/AdminUpload';
+import AdminVideo from './components/AdminVideo';
 
 function App(){
   
@@ -40,6 +41,8 @@ function App(){
       <Route path="/admin" element={isAuthenticated && user?.role === 'admin' ? <Admin /> : <Navigate to="/" />} />
       <Route path="/admin/create" element={isAuthenticated && user?.role === 'admin' ? <AdminPanel /> : <Navigate to="/" />} />
       <Route path="/admin/delete" element={isAuthenticated && user?.role === 'admin' ? <AdminDelete/> : <Navigate to="/" />} /> 
+      <Route path="/admin/video" element={isAuthenticated && user?.role === 'admin' ? <AdminVideo/> : <Navigate to="/" />} /> 
+      <Route path="/admin/upload" element={isAuthenticated && user?.role === 'admin' ? <AdminUpload/> : <Navigate to="/" />} /> 
       
       </Routes>
       
